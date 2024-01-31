@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const ManagerSchema = new mongoose.Schema({
+export const ManagerSchema = new mongoose.Schema({
   name: { type: String},
   password: { type: String},
   type: { type: String},
