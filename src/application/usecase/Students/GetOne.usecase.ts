@@ -1,5 +1,4 @@
 import StudentRepositoryInterface from "src/application/repository/StudentsRepositoryInterface";
-import { input } from "../Manager/logout.usecase";
 
 export default class GetOneUseCaseStudent {
     constructor(readonly repo: StudentRepositoryInterface) {}
