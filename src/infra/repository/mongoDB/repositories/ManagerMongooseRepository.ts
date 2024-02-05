@@ -6,15 +6,15 @@ import TokenModel from '../models/MongooseModelBlackList';
 export default class ManagerMongooseRepository implements ManagerRepositoryInterface {
     model = managerModel
   async GetOne(name: string): Promise<any> {
-    const student = await this.model.findOne({name: name})
-    if(!student)
+    const manager = await this.model.findOne({name: name})
+    if(!manager)
       throw new Error("Administrador não encontrado")
     const returnManager = {
-      name: student.name,
-      password: student.password,
-      type: student.type,
-      id: student.id,
-      organizationId: student.organizationId,
+      name: manager.name,
+      password: manager.password,
+      type: manager.type,
+      id: manager.id,
+      organizationId: manager.organizationId,
     }
     return returnManager;
   }

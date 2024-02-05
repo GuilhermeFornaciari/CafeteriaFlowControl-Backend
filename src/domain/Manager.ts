@@ -22,7 +22,7 @@ export default class Manager {
     return token;
   }
 
-  public async validToken(token) {
+  static async validToken(token) {
     const verifyToken = jwt.verify(token, process.env.secretJWTkey)
     if(!verifyToken)
       throw new Error("Token inválido")
@@ -31,7 +31,6 @@ export default class Manager {
 }
   
 export type managerDto = {
-  token?: string,
-  name?: string;
-  password?: string;
+  name: string;
+  password: string;
 };

@@ -4,8 +4,7 @@ import Manager from "src/domain/Manager";
 export default class UsecaseLoginManager {
   constructor(readonly repo: ManagerRepositoryInterface) {}
   async execute(props: input): Promise<output> {
-    const manager = Manager.create(props)
-    if(manager.validToken(props.token))
+    if(Manager.validToken(props.token))
     await this.repo.logout(props.token)
   }
 }
