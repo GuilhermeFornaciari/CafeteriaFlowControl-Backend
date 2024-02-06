@@ -7,17 +7,17 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export default class ManagerMemoryRepository implements ManagerRepositoryInterface {
     private managerDatabase: Array<any> = []
-    private blacklistDataBase: Array<any> = []
 
-    async save(manager): Promise<void> {
+    async save(manager): Promise<any> {
     const password = await bcrypt.hash(manager.password, 6);
-        this.managerDatabase.push({
+        const oneManager = await this.managerDatabase.push({
             name: manager.name,
             password: password,
             type: manager.type,
             id: crypto.randomUUID(),
             organizationId: crypto.randomUUID(),
         })
+        return oneManager
     }
 
     async GetOne(name: string): Promise<any> {
@@ -33,11 +33,5 @@ export default class ManagerMemoryRepository implements ManagerRepositoryInterfa
       organizationId: manager.organizationId,
     }
     return returnManager;
-  }
-
-  async logout(token: string): Promise<void> {
-    await this.blacklistDataBase.push({
-    bannedToken: token,
-    })
   }
 }

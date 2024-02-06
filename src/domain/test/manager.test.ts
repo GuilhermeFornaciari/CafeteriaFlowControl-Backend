@@ -1,6 +1,5 @@
 import Manager from "../Manager"
 import ManagerMemoryRepository from '../../infra/repository/memory/ManagerMemoryRepository'
-import { delay } from "rxjs"
 
 
 test('Deve testar o método create da entidade Manager', () => {

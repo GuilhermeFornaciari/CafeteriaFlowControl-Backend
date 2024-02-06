@@ -26,16 +26,13 @@ model = studentsModel
         const students = await this.model.find({organizationId: organizationId})
         if(!students)
             throw new Error("nenhum aluno encontrado")
-            students.map((data) => {
-                return {
-                    name: data.name,
-                    className: data.className,
-                    type: data.type,
-                    organizationId: data.organizationId,
-                    registration: data.registration,
-                    id: data.id,
-                }
-            })
-            return students
+        return students.map((data) => ({
+            name: data.name,
+            className: data.className,
+            type: data.type,
+            organizationId: data.organizationId,
+            registration: data.registration,
+            id: data.id,
+            }));
     }
 }
