@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import ManagerRepositoryInterface from 'src/application/repository/ManagerRepositoryInterface';
 import managerModel from '../models/MongooseModelManager';
-import TokenModel from '../models/MongooseModelBlackList';
 @Injectable()
 export default class ManagerMongooseRepository implements ManagerRepositoryInterface {
     model = managerModel
@@ -17,11 +16,5 @@ export default class ManagerMongooseRepository implements ManagerRepositoryInter
       organizationId: manager.organizationId,
     }
     return returnManager;
-  }
-
-  async logout(token: string): Promise<void> {
-    await TokenModel.create({
-    bannedToken: token,
-    })
   }
 }
