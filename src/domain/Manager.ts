@@ -1,5 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
+import { config } from 'dotenv';
+config();
 
 export default class Manager {
   constructor(readonly user: string, readonly password: string) {}
@@ -12,8 +14,9 @@ export default class Manager {
   
   public async validPassword(password) {
     const passwordIsValid = await bcrypt.compare(this.password, password)
-    if(!passwordIsValid)
-        throw new Error("Senha incorreta!")
+    if(!passwordIsValid){
+      throw new Error("Senha incorreta!")
+      }
     return true;
   }
 
@@ -23,10 +26,19 @@ export default class Manager {
   }
 
   static async validToken(token) {
-    const verifyToken = jwt.verify(token, process.env.secretJWTkey)
-    if(!verifyToken)
-      throw new Error("Token inválido")
-    return true;
+    try {
+      if(jwt.verify(token, process.env.secretJWTkey))
+      return true;
+    } catch (error) {
+      switch( error.message ){
+          case 'jwt malformed': {
+              throw new Error('Token inválido')
+          }
+          default: {
+            throw new Error('Token inválido')
+          }
+      }
+    }
   }
 }
   
