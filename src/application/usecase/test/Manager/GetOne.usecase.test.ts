@@ -1,8 +1,8 @@
 import axios from "axios";
-import GetOneUseCaseManager from "../Manager/GetOne.usecase";
+import GetOneUseCaseManager from "../../Manager/GetOne.usecase";
 import mongoose from "mongoose";
 import { config } from 'dotenv';
-import ManagerMongooseRepository from "../../../infra/repository/mongoDB/repositories/ManagerMongooseRepository";
+import ManagerMongooseRepository from "../../../../infra/repository/mongoDB/repositories/ManagerMongooseRepository";
 config();
 
 async function login(organizationId?) {

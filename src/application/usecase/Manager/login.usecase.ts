@@ -1,11 +1,13 @@
 import ManagerRepositoryInterface from "src/application/repository/ManagerRepositoryInterface";
-import Manager from "src/domain/Manager";
+import Manager from "../../../domain/Manager";
 import nodeSchedule from 'node-schedule';
 
 export default class UsecaseLoginManager {
   constructor(readonly repo: ManagerRepositoryInterface) {}
   async execute(props: input): Promise<output> {
     const manager = Manager.create(props);
+    console.log(props)
+    console.log(props.name)
     const getManager = await this.repo.GetOne(props.name);
     const token = await manager.generateToken(getManager.id);
     if (manager.validPassword(getManager.password)) {

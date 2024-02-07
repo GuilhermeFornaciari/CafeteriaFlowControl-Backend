@@ -5,17 +5,13 @@ config();
 
 export default class Manager {
   constructor(
-  readonly name: string, readonly password: string, 
-  readonly token:string, readonly type: string, readonly id: string, 
-  readonly organizationId: string) {}
+  readonly name: string, readonly password: string) {}
 
   static create(props: managerDto) {
     if(!props)
       throw new Error("Dados não encontrados")
     return new Manager(
-      props.name, props.password,
-      props.token, props.type,
-      props.id, props.organizationId);
+      props.name, props.password);
   }
   
   public async validPassword(password) {
@@ -49,10 +45,6 @@ export default class Manager {
 }
   
 export type managerDto = {
-  token: string;
   name: string;
   password: string;
-  type: string,
-  id: string;
-  organizationId: string;
 };
