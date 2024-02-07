@@ -4,12 +4,18 @@ import { config } from 'dotenv';
 config();
 
 export default class Manager {
-  constructor(readonly user: string, readonly password: string) {}
+  constructor(
+  readonly name: string, readonly password: string, 
+  readonly token:string, readonly type: string, readonly id: string, 
+  readonly organizationId: string) {}
 
   static create(props: managerDto) {
     if(!props)
       throw new Error("Dados não encontrados")
-    return new Manager(props.name, props.password);
+    return new Manager(
+      props.name, props.password,
+      props.token, props.type,
+      props.id, props.organizationId);
   }
   
   public async validPassword(password) {
@@ -43,6 +49,10 @@ export default class Manager {
 }
   
 export type managerDto = {
+  token: string;
   name: string;
   password: string;
+  type: string,
+  id: string;
+  organizationId: string;
 };
