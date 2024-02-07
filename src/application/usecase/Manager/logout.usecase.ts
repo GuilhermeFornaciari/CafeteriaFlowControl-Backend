@@ -1,16 +1,14 @@
-import ManagerRepositoryInterface from "src/application/repository/ManagerRepositoryInterface";
-import Manager from "src/domain/Manager";
+import Manager from "../../../domain/Manager";
+import LogoutRepositoryInterface from "../../repository/LogoutRepositoryInterface";
 
-export default class UsecaseLoginManager {
-  constructor(readonly repo: ManagerRepositoryInterface) {}
-  async execute(props: input): Promise<output> {
-    if(Manager.validToken(props.token))
-    await this.repo.logout(props.token)
+export default class UsecaseLogoutManager {
+  constructor(readonly repo: LogoutRepositoryInterface) {}
+  async execute(token: input): Promise<output> {
+    if(Manager.validToken(token))
+    await this.repo.logout(token)
   }
 }
 
-export type input = {
-    token: string,
-};
+export type input = string
 
 export type output = void

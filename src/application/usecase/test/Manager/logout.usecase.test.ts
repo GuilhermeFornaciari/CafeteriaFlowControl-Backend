@@ -1,9 +1,10 @@
 import axios from "axios";
 import mongoose from "mongoose";
 import { config } from 'dotenv';
-import ManagerMongooseRepository from "../../../../infra/repository/mongoDB/repositories/ManagerMongooseRepository";
-import UsecaseLoginManager from "../../Manager/login.usecase";
+import UsecaseLogoutManager from "../../Manager/logout.usecase";
 import LogoutMongooseRepository from "../../../../infra/repository/mongoDB/repositories/LogoutMongooseRepository";
+import UsecaseLoginManager from "../../Manager/login.usecase";
+import ManagerMongooseRepository from "../../../../infra/repository/mongoDB/repositories/ManagerMongooseRepository";
 config();
 
 async function login(organizationId?) {
@@ -53,7 +54,7 @@ async function login(organizationId?) {
     return ObjectLogin
 }
 
-test("deve testar o Login do caso de uso da entidade Manager", async() => {
+test("deve testar o logout do caso de uso da entidade Manager", async() => {
     await mongoose.connect(process.env.connectionString as string);
     const newLogin = await login()
     const validInput = {
@@ -62,5 +63,7 @@ test("deve testar o Login do caso de uso da entidade Manager", async() => {
     }
     const newLoginInMicroservice = new UsecaseLoginManager(new ManagerMongooseRepository(), new LogoutMongooseRepository)
     const returnManager = await newLoginInMicroservice.execute(validInput)
-    expect(returnManager).toBeDefined()
+    const token = returnManager.token
+    const newLogout = new UsecaseLogoutManager(new LogoutMongooseRepository)
+    expect(async () => newLogout.execute(token)).toBeTruthy()
 }, 15000)
