@@ -1,7 +1,7 @@
 import axios from "axios";
-import GetOneUseCaseManager from "../../Manager/GetOne.usecase";
+import GetAllUseCaseStudent from "../../Students/GetAll.usecase";
+import StudentsMongooseRepository from "../../../../infra/repository/mongoDB/repositories/StudentMongooseRepository";
 import mongoose from "mongoose";
-import ManagerMongooseRepository from "../../../../infra/repository/mongoDB/repositories/ManagerMongooseRepository";
 import { config } from 'dotenv';
 config();
 
@@ -51,11 +51,39 @@ async function login(organizationId?) {
     return ObjectLogin
 }
 
-test("deve testar o GetOne do caso de uso da entidade Manager", async() => {
+test("Deve testar o GetAll do microserviço", async() => {
     await mongoose.connect(process.env.connectionString as string);
+    const randomUser = Math.random().toString(36).slice(-15);
+    const randomUser1 = Math.random().toString(36).slice(-15);
     const newLogin = await login()
-    const nameManager = newLogin.manager.name
-    const newManager = new GetOneUseCaseManager(new ManagerMongooseRepository())
-    const getManager = await newManager.execute(nameManager)
-    expect(getManager).toBeDefined()
-},15000)
+    const postParam = {
+        name: 'Julio César Aguiar',
+        className: '2022 A TI',
+        type: false,
+        registration: randomUser
+    }
+    await axios.post('https://sosa-repo-main.vercel.app/Student/' + newLogin.manager.organizationId ,
+    postParam,
+    {
+        headers: {authorization: newLogin.token}
+    },
+    );
+    const postParam2 = {
+        name: 'Thiciane Frata Borges',
+        className: '2022 B TI',
+        type: true,
+        registration: randomUser1
+    }
+    await axios.post('https://sosa-repo-main.vercel.app/Student/' + newLogin.manager.organizationId ,
+    postParam2,
+    {
+        headers: {authorization: newLogin.token}
+    },
+    );
+    const newStudents = new GetAllUseCaseStudent(new StudentsMongooseRepository())
+    const getStudents = await newStudents.execute(newLogin.manager.organizationId)
+    const returnStudents = getStudents.find((element) => element.registration == postParam.registration)
+    expect(returnStudents.registration).toBe(postParam.registration)
+    const returnStudents1 = getStudents.find((element) => element.registration == postParam2.registration)
+    expect(returnStudents1.registration).toBe(postParam2.registration)
+}, 15000)
