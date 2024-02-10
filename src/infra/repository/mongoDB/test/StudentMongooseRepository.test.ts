@@ -88,7 +88,7 @@ test("Deve testar o GetOne para verificar um aluno que já existe", async() => {
     await mongoose.connect(process.env.connectionString as string);
     const newStudent = await postStudent()
     const repo = new StudentsMongooseRepository()
-    await repo.GetOne(newStudent.registration)
+    await repo.GetOne(newStudent.registration, newStudent.organizationId)
     await mongoose.connection.close();
 }, 15000)
 

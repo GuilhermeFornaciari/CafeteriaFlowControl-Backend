@@ -54,7 +54,7 @@ test("Deve testar o save do logout e o GetOne para verificá-lo", async() => {
   await mongoose.connect(process.env.connectionString as string);
   const newLogin = await login()
   const repoLogout = new LogoutMongooseRepository()
-  await repoLogout.save(newLogin.token)
+  await repoLogout.logout(newLogin.token)
   const getToken = await repoLogout.GetOne(newLogin.token)
   expect(getToken).toBeDefined()
   await mongoose.connection.close();

@@ -1,8 +1,8 @@
-import StudentRepositoryInterface from "src/application/repository/StudentsRepositoryInterface";
+import StudentRepositoryInterface from "../../repository/StudentsRepositoryInterface";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
 export default class GetOneUseCaseStudent {
     constructor(readonly repo: StudentRepositoryInterface) {}
-    async execute(registration: Input, idOrganization: Input): Promise<Output> {
+        async execute(registration: Input, idOrganization: Input): Promise<Output> {
         const student = await this.repo.GetOne(registration, idOrganization);
         return {
             name: student.name,

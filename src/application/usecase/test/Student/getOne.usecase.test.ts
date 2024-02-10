@@ -70,4 +70,4 @@ test("Deve testar o caso de uso, GetOne da entidadade Students", async() => {
     const newStudents = new GetOneUseCaseStudent(new StudentsMongooseRepository())
     const getStudent = await newStudents.execute(postParam.registration, newLogin.manager.organizationId)
     expect(getStudent).toBeDefined()
-}, 15000);
+}, 15000)

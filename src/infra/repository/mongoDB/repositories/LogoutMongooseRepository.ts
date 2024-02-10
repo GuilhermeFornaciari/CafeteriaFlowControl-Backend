@@ -11,8 +11,8 @@ export default class LogoutMongooseRepository implements LogoutRepositoryInterfa
   
   async GetOne(token: string): Promise<any> {
     const isBlackListed = await TokenModel.findOne({bannedToken: token})
-    if(isBlackListed)
-      throw new Error("Token já está listado")
+    if(!isBlackListed)
+      throw new Error("Token não encontrado")
     const returnToken = {
       bannedToken: isBlackListed.bannedToken
     }
