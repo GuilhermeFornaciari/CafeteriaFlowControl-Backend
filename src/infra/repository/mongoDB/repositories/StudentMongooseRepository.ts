@@ -7,17 +7,22 @@ import studentsModel from '../models/MongooseModelStudents';
 export default class StudentsMongooseRepository implements StudentRepositoryInterface {
 model = studentsModel
 
-     async GetOne(registration: string): Promise<any> {
-        const student = await this.model.findOne({registration: registration})
-        if (!student)
+     async GetOne(registration: string, idOrganization: string): Promise<any> {
+        const registrationStudentsEqual = await studentsModel.findOne({
+            $and: [
+                { registration: registration },
+                { organizationId: idOrganization },
+            ]
+        });
+        if (!registrationStudentsEqual)
             throw new Error("Aluno não encontrado")
         const returnStudent = {
-            name: student.name,
-            className: student.className,
-            type: student.type,
-            organizationId: student.organizationId,
-            registration: student.registration,
-            id: student.registration,
+            name: registrationStudentsEqual.name,
+            className: registrationStudentsEqual.className,
+            type: registrationStudentsEqual.type,
+            organizationId: registrationStudentsEqual.organizationId,
+            registration: registrationStudentsEqual.registration,
+            id: registrationStudentsEqual.registration,
         }
         return returnStudent;
     }

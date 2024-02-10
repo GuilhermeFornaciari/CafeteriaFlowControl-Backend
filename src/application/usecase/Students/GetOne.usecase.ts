@@ -2,8 +2,8 @@ import StudentRepositoryInterface from "src/application/repository/StudentsRepos
 
 export default class GetOneUseCaseStudent {
     constructor(readonly repo: StudentRepositoryInterface) {}
-    async execute(props: Input): Promise<Output> {
-        const student = await this.repo.GetOne(props.registration);
+    async execute(registration: Input, idOrganization: Input): Promise<Output> {
+        const student = await this.repo.GetOne(registration, idOrganization);
         return {
             name: student.name,
             className: student.className,
@@ -15,9 +15,7 @@ export default class GetOneUseCaseStudent {
     }
 }
 
-export type Input = {
-    registration: string;
-}
+export type Input = string
 
 export type Output = {
     name: string,
