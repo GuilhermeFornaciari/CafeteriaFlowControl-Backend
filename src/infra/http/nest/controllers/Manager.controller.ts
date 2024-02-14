@@ -3,8 +3,6 @@ import {
     Controller,
     Get,
     Param,
-    Put,
-    Delete,
     Post,
   } from '@nestjs/common';
 import ManagerMongooseRepository from '../../../repository/mongoDB/repositories/ManagerMongooseRepository';
@@ -29,7 +27,7 @@ export default class ManagerController {
         return await usecase.execute(name);
     }
 
-    @Get()
+    @Post()
     async login(@Body() loginData: loginInput) {
         const usecase = new LoginUsecaseManager(this.repoManager, this.repoLogout)
         return await usecase.execute(loginData)
