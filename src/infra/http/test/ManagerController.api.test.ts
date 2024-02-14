@@ -1,6 +1,5 @@
 import axios from 'axios';
 const baseurl = 'http://localhost:4000/manager';
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function login(organizationId?) {
     const randomUser = Math.random().toString(36).slice(-10);

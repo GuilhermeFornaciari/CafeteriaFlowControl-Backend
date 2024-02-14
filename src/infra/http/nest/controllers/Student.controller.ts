@@ -5,7 +5,7 @@ import {
     Param,
   } from '@nestjs/common';
 import GetOneUseCaseStudent from '../../../../application/usecase/Students/GetOne.usecase';
-import GetAllUseCaseStudent from 'src/application/usecase/Students/GetAll.usecase';
+import GetAllUseCaseStudent from '../../../../application/usecase/Students/GetAll.usecase';
 import StudentsMongooseRepository from '../../../repository/mongoDB/repositories/StudentMongooseRepository';
 
   @Controller('student')
