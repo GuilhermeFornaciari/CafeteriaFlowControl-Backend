@@ -10,7 +10,6 @@ import TokenModel from '../../../repository/mongoDB/models/MongooseModelBlackLis
 export class loginRequired implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
     const token = req.headers.authorization;
-    console.log(token)
     if (!token) {
         return res.status(401).json({msg:"Você deve estar logado para acessar esta pagina"})
     }

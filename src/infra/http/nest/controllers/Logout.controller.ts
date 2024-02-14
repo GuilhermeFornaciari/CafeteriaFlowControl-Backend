@@ -9,7 +9,6 @@ import LogoutMongooseRepository from '../../../repository/mongoDB/repositories/L
 @Controller('logout')
 export default class LogoutController {
     constructor (readonly repoLogout: LogoutMongooseRepository) {}
-    
     @Post(':token')
     async Logout(@Param('token') token: string) {
         const usecase = new LogoutUsecaseManager(this.repoLogout)

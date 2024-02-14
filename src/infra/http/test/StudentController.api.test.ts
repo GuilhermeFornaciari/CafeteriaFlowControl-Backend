@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { elementAt } from 'rxjs';
 const baseurl = 'http://localhost:4000/student';
+const baseurlManager = 'http://localhost:4000/manager';
 
 async function login(organizationId?) {
     const randomUser = Math.random().toString(36).slice(-10);
@@ -48,61 +50,110 @@ async function login(organizationId?) {
     return ObjectLogin
 }
 
-async function postStudent() {
+async function postTwoStudent() {
     const randomUser1 = Math.random().toString(36).slice(-15);
+    const randomUser2 = Math.random().toString(36).slice(-15);
     const newLogin = await login()
     const organizationId = newLogin.manager.organizationId
-    const postParam = {
+    const postParam1 = {
         name: 'Julio César Aguiar',
         className: '2022 A TI',
         type: false,
         registration: randomUser1,
     }
-    const AxiosPost = await axios.post('http://localhost:3000/Student/' + organizationId ,
-    postParam,
+    const AxiosPost1 = await axios.post('http://localhost:3000/Student/' + organizationId ,
+    postParam1,
     {
       headers: {authorization: newLogin.token}
     },
     );
-    const AxiosGetOne = await axios.get(
-        'http://localhost:3000/Student/'+ organizationId + '/' + AxiosPost.data.id,
-        {
-            headers: {authorization: newLogin.token}
-        },
-      );
-    const studentObject = {
-      name: AxiosGetOne.data.props.name,
-      className: AxiosGetOne.data.props.className,
-      registration: AxiosGetOne.data.props.registration,
-      type: AxiosGetOne.data.props.type,
-      id: AxiosPost.data.id,
+    const postParam2 = {
+      name: 'Thiciane Fernanda Frata Borges',
+      className: '2022 B TI',
+      type: false,
+      registration: randomUser2,
+    }
+    const AxiosPost2 = await axios.post('http://localhost:3000/Student/' + organizationId ,
+    postParam2,
+    {
+      headers: {authorization: newLogin.token}
+    },
+    );
+    const objectReturn = {
+      registration1: AxiosPost1.data.registration,
+      registration2: AxiosPost2.data.registration,
       organizationId: organizationId,
     }
-    return studentObject;
+    return objectReturn
 }
 
+async function postStudent() {
+  const randomUser1 = Math.random().toString(36).slice(-15);
+  const newLogin = await login()
+  const organizationId = newLogin.manager.organizationId
+  const postParam = {
+      name: 'Julio César Aguiar',
+      className: '2022 A TI',
+      type: false,
+      registration: randomUser1,
+  }
+  const AxiosPost = await axios.post('http://localhost:3000/Student/' + organizationId ,
+  postParam,
+  {
+    headers: {authorization: newLogin.token}
+  },
+  );
+  const AxiosGetOne = await axios.get(
+      'http://localhost:3000/Student/'+ organizationId + '/' + AxiosPost.data.id,
+      {
+          headers: {authorization: newLogin.token}
+      },
+    );
+  const studentObject = {
+    name: AxiosGetOne.data.props.name,
+    className: AxiosGetOne.data.props.className,
+    registration: AxiosGetOne.data.props.registration,
+    type: AxiosGetOne.data.props.type,
+    id: AxiosPost.data.id,
+    organizationId: organizationId,
+  }
+  return studentObject;
+}
+
+async function loginInApi() {
+  const newLogin = await login()
+  const inputLogin = {
+      name: newLogin.manager.name,
+      password: newLogin.manager.password,
+  }
+  const getToken = await axios.post(baseurlManager, inputLogin)
+  const objectLogin = {
+    name: inputLogin.name,
+    password: inputLogin.password,
+    token: getToken.data.token
+  }
+  return objectLogin
+}
 
 test("Deve testar o GetOne da entidade Student", async() => {
     const newStudent = await postStudent()
-    const getStudent = await axios.get(baseurl + '/' + newStudent.registration + '/' + newStudent.organizationId)
+    const newLoginInApi = await loginInApi()
+    const getStudent = await axios.get(baseurl + '/' + newStudent.registration + '/' + newStudent.organizationId,
+    {
+      headers: {authorization: newLoginInApi.token}
+    })
     expect(getStudent.data).toBeDefined()
 }, 15000)
 
 test("Deve testar o GetAll da entidade Student", async() => {
-    const randomUser1 = Math.random().toString(36).slice(-15);
-    const newLogin = await login()
-    const newStudent = await postStudent()
-    const organizationId = newLogin.manager.organizationId
-    const postParam = {
-        name: 'Julio César Aguiar',
-        className: '2022 A TI',
-        type: false,
-        registration: randomUser1,
-    }
-    const AxiosPost = await axios.post('http://localhost:3000/Student/' + organizationId ,
-    postParam,
-    {
-      headers: {authorization: newLogin.token}
-    },
-    );
+  const students = await postTwoStudent()
+  const newLoginInApi = await loginInApi()
+  const getStudent = await axios.get(baseurl + '/' + students.organizationId,
+  {
+    headers: {authorization: newLoginInApi.token}
+  })
+  const getRegistration1 = getStudent.data.find((element) => element.registration == students.registration1)
+  expect(getRegistration1).toBeDefined()
+  const getRegistration2 = getStudent.data.find((element) => element.registration == students.registration2)
+  expect(getRegistration2).toBeDefined()
 }, 15000)
