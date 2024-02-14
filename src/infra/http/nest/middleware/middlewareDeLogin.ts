@@ -11,6 +11,7 @@ export class loginRequired implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
     const token = req.headers.authorization;
     if (!token) {
+        console.log(token)
         return res.status(401).json({msg:"Você deve estar logado para acessar esta pagina"})
     }
     if (!jwt.verify(token, process.env.secretJWTkey))

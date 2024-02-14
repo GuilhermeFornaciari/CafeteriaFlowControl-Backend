@@ -1,5 +1,6 @@
 import axios from 'axios';
 const baseurl = 'http://localhost:4000/manager';
+const baseurlLogout = 'http://localhost:4000/logout';
 
 async function login(organizationId?) {
     const randomUser = Math.random().toString(36).slice(-10);
@@ -49,37 +50,33 @@ async function login(organizationId?) {
 }
 
 async function loginInApi() {
-  const newLogin = await login()
-  const inputLogin = {
-      name: newLogin.manager.name,
-      password: newLogin.manager.password,
-  }
-  const getToken = await axios.post(baseurl, inputLogin)
-  console.log(getToken.data)
-  const objectLogin = {
-    name: inputLogin.name,
-    password: inputLogin.password,
-    token: getToken.data.token
-  }
-  return objectLogin
-}
-
-test("Deve testar o GetOne", async () => {
-    const newLogin = await login()
-    const newLoginInApi = await loginInApi()
-    const getOne = await axios.get(baseurl + '/' + newLogin.manager.name,
-    {
-      headers: {authorization: newLoginInApi.token}
-    })
-    expect(getOne.data).toBeDefined()
-}, 15000)
-
-test("Deve testar o Login", async() => {
     const newLogin = await login()
     const inputLogin = {
         name: newLogin.manager.name,
         password: newLogin.manager.password,
     }
     const getToken = await axios.post(baseurl, inputLogin)
+    const objectLogin = {
+      name: inputLogin.name,
+      password: inputLogin.password,
+      token: getToken.data.token
+    }
+    return objectLogin
+  }
+
+test("Deve testar o Logout", async() => {
+    const newLogin = await login()
+    const newLoginInApi = await loginInApi()
+    const inputLogin = {
+        name: newLogin.manager.name,
+        password: newLogin.manager.password,
+    }
+    const getToken = await axios.post(baseurl, inputLogin)
     expect(getToken.data.token).toBeDefined()
+    const logout = await axios.post(baseurlLogout + '/' + getToken.data.token,
+    {},
+    {
+      headers: {authorization: newLoginInApi.token}
+    },)
+    expect(logout.data).toBeDefined()
 }, 15000)

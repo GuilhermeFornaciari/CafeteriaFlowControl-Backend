@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './src/infra/http/nest/app.module';
+import { AppModule } from './infra/http/nest/app.module';
 
 async function main(port: number) {
   const app = await NestFactory.create(AppModule, { cors: true });

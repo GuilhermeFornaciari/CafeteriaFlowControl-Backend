@@ -16,8 +16,8 @@ import LogoutController from './controllers/Logout.controller';
     providers: [
         connectDatabase,
         ManagerMongooseRepository,
-        LogoutMongooseRepository,
         StudentsMongooseRepository,
+        LogoutMongooseRepository,
     ],
     exports: [connectDatabase]
 })
