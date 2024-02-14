@@ -15,12 +15,6 @@ import { input as loginInput } from '../../../../application/usecase/Manager/log
 export default class ManagerController {
     constructor (readonly repoManager: ManagerMongooseRepository, readonly repoLogout: LogoutMongooseRepository) {}
     
-    @Post(':token')
-    async Logout(@Param('token') token: string) {
-        const usecase = new LogoutUsecaseManager(this.repoLogout)
-        return await usecase.execute(token)
-    }
-    
     @Get(':name')
     async findOne(@Param('name') name:string) {
         const usecase = new GetOneUseCaseManager(this.repoManager)
@@ -32,5 +26,4 @@ export default class ManagerController {
         const usecase = new LoginUsecaseManager(this.repoManager, this.repoLogout)
         return await usecase.execute(loginData)
     }
-
 }
