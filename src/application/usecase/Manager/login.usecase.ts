@@ -3,7 +3,7 @@ import Manager from "../../../domain/Manager";
 import nodeSchedule from 'node-schedule';
 import LogoutRepositoryInterface from "../../repository/LogoutRepositoryInterface";
 
-export default class UsecaseLoginManager {
+export default class LoginUsecaseManager {
   constructor(readonly repo: ManagerRepositoryInterface, readonly repoLogout: LogoutRepositoryInterface) {}
   async execute(props: input): Promise<output> {
     const manager = Manager.create(props);

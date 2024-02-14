@@ -1,7 +1,7 @@
 import Manager from "../../../domain/Manager";
 import LogoutRepositoryInterface from "../../repository/LogoutRepositoryInterface";
 
-export default class UsecaseLogoutManager {
+export default class LogoutUsecaseManager {
   constructor(readonly repo: LogoutRepositoryInterface) {}
   async execute(token: input): Promise<output> {
     if(Manager.validToken(token))
