@@ -26,14 +26,14 @@ async function login(organizationId?) {
       password: dataPostOrganization.manager.password,
       type: dataPostOrganization.manager.type
     }
-    const organizationPost = await axios.post('https://sosa-repo-main.vercel.app/Organization',
+    const organizationPost = await axios.post('http://localhost:3000/Organization',
     dataPostOrganization);
     const AxiosOutput = await axios.post(
-      'https://sosa-repo-main.vercel.app/Admin',
+      'http://localhost:3000/Admin',
       inputLogin
     );
     const managerPost = await axios.post(
-      'https://sosa-repo-main.vercel.app/Admin/' + organizationId, inputPostManager,
+      'http://localhost:3000/Admin/' + organizationId, inputPostManager,
       {
         headers: {authorization: AxiosOutput.data.token}
       },
@@ -47,7 +47,6 @@ async function login(organizationId?) {
       },
       token : AxiosOutput.data.token
     }
-    console.log(ObjectLogin)
     return ObjectLogin
 }
 
@@ -61,14 +60,14 @@ async function postStudent() {
         type: false,
         registration: randomUser1,
     }
-    const AxiosPost = await axios.post('https://sosa-repo-main.vercel.app/Student/' + organizationId ,
+    const AxiosPost = await axios.post('http://localhost:3000/Student/' + organizationId ,
     postParam,
     {
       headers: {authorization: newLogin.token}
     },
     );
     const AxiosGetOne = await axios.get(
-        'https://sosa-repo-main.vercel.app/Student/'+ organizationId + '/' + AxiosPost.data.id,
+        'http://localhost:3000/Student/'+ organizationId + '/' + AxiosPost.data.id,
         {
             headers: {authorization: newLogin.token}
         },
@@ -103,7 +102,7 @@ test("Deve testar o GetAll para verificar um aluno que já existe", async() => {
         type: false,
         registration: randomUser1,
     }
-    const AxiosPost = await axios.post('https://sosa-repo-main.vercel.app/Student/' + organizationId ,
+    const AxiosPost = await axios.post('http://localhost:3000/Student/' + organizationId ,
     postParam,
     {
       headers: {authorization: newLogin.token}
@@ -116,7 +115,7 @@ test("Deve testar o GetAll para verificar um aluno que já existe", async() => {
         type: false,
         registration: randomUser2,
     }
-    const AxiosPost1 = await axios.post('https://sosa-repo-main.vercel.app/Student/' + organizationId ,
+    const AxiosPost1 = await axios.post('http://localhost:3000/Student/' + organizationId ,
     postParam1,
     {
       headers: {authorization: newLogin.token}

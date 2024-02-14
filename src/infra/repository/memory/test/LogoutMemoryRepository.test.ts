@@ -2,10 +2,6 @@ import Manager from "../../../../domain/Manager";
 import logoutMemoryRepository from "../LogoutMemoryRepository"
 import ManagerMemoryRepository from "../ManagerMemoryRepository";
 
-// test("deve testar o logout e o GetOne da implementação do banco de dados falso", async => {
-//     const repo = new logoutMemoryRepository()
-
-// }, 15000)
 test("Deve testar o logout e o GetOne da implementação de banco de dados falso(orientado a arrays)", async () => {
     const validInput = {
         name: 'Júlio César Aguiar',

@@ -26,14 +26,14 @@ async function login(organizationId?) {
       password: dataPostOrganization.manager.password,
       type: dataPostOrganization.manager.type
     }
-    const organizationPost = await axios.post('https://sosa-repo-main.vercel.app/Organization',
+    const organizationPost = await axios.post('http://localhost:3000/Organization',
     dataPostOrganization);
     const AxiosOutput = await axios.post(
-      'https://sosa-repo-main.vercel.app/Admin',
+      'http://localhost:3000/Admin',
       inputLogin
     );
     const managerPost = await axios.post(
-      'https://sosa-repo-main.vercel.app/Admin/' + organizationId, inputPostManager,
+      'http://localhost:3000/Admin/' + organizationId, inputPostManager,
       {
         headers: {authorization: AxiosOutput.data.token}
       },
