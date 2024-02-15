@@ -1,5 +1,4 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-import { databaseProviders as connectDatabase } from './mongodbProvider';
 import ManagerController from './../../http/nest/controllers/Manager.controller';
 import ManagerMongooseRepository from '../../repository/mongoDB/repositories/ManagerMongooseRepository';
 import LogoutMongooseRepository from '../../repository/mongoDB/repositories/LogoutMongooseRepository';
@@ -7,6 +6,7 @@ import StudentController from './controllers/Student.controller';
 import StudentsMongooseRepository from '../../repository/mongoDB/repositories/StudentMongooseRepository';
 import { loginRequired } from './middleware/middlewareDeLogin';
 import LogoutController from './controllers/Logout.controller';
+import { databaseProviders as connectDatabase } from './mongodbProvider';
 @Module({
     controllers: [
         ManagerController,

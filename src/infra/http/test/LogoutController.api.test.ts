@@ -73,7 +73,7 @@ test("Deve testar o Logout", async() => {
     }
     const getToken = await axios.post(baseurl, inputLogin)
     expect(getToken.data.token).toBeDefined()
-    const logout = await axios.post(baseurlLogout + '/' + getToken.data.token,
+    const logout = await axios.post("https://cafeteria-flow-control-backend.vercel.app/logout" + '/' + getToken.data.token,
     {},
     {
       headers: {authorization: newLoginInApi.token}

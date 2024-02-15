@@ -1,6 +1,6 @@
 {
   "name": "cafeteria-flow-control",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "<p align=\"center\">\r   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo-small.svg\" width=\"200\" alt=\"Nest Logo\" /></a>\r </p>",
   "author": "Júlio César Aguiar",
   "private": true,
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "npx nodemon main.ts",
+    "start": "npx nodemon src/main.ts",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
