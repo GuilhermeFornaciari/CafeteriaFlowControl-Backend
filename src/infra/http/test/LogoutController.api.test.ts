@@ -55,7 +55,7 @@ async function loginInApi() {
         name: newLogin.manager.name,
         password: newLogin.manager.password,
     }
-    const getToken = await axios.post(baseurl, inputLogin)
+    const getToken = await axios.post("https://cafeteria-flow-control-backend.vercel.app/manager", inputLogin)
     const objectLogin = {
       name: inputLogin.name,
       password: inputLogin.password,
@@ -71,7 +71,7 @@ test("Deve testar o Logout", async() => {
         name: newLogin.manager.name,
         password: newLogin.manager.password,
     }
-    const getToken = await axios.post(baseurl, inputLogin)
+    const getToken = await axios.post("https://cafeteria-flow-control-backend.vercel.app/manager", inputLogin)
     expect(getToken.data.token).toBeDefined()
     const logout = await axios.post("https://cafeteria-flow-control-backend.vercel.app/logout" + '/' + getToken.data.token,
     {},

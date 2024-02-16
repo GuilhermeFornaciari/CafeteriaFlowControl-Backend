@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { elementAt } from 'rxjs';
-const baseurl = 'http://localhost:4000/student';
+const baseurl = 'https://cafeteria-flow-control-backend.vercel.app/student';
 const baseurlManager = 'http://localhost:4000/manager';
 
 async function login(organizationId?) {
@@ -126,7 +125,7 @@ async function loginInApi() {
       name: newLogin.manager.name,
       password: newLogin.manager.password,
   }
-  const getToken = await axios.post(baseurlManager, inputLogin)
+  const getToken = await axios.post("https://cafeteria-flow-control-backend.vercel.app/manager", inputLogin)
   const objectLogin = {
     name: inputLogin.name,
     password: inputLogin.password,
@@ -138,7 +137,7 @@ async function loginInApi() {
 test("Deve testar o GetOne da entidade Student", async() => {
     const newStudent = await postStudent()
     const newLoginInApi = await loginInApi()
-    const getStudent = await axios.get(baseurl + '/' + newStudent.registration + '/' + newStudent.organizationId,
+    const getStudent = await axios.get('https://cafeteria-flow-control-backend.vercel.app/student' + '/' + newStudent.registration + '/' + newStudent.organizationId,
     {
       headers: {authorization: newLoginInApi.token}
     })
@@ -148,7 +147,7 @@ test("Deve testar o GetOne da entidade Student", async() => {
 test("Deve testar o GetAll da entidade Student", async() => {
   const students = await postTwoStudent()
   const newLoginInApi = await loginInApi()
-  const getStudent = await axios.get(baseurl + '/' + students.organizationId,
+  const getStudent = await axios.get('https://cafeteria-flow-control-backend.vercel.app/student' + '/' + students.organizationId,
   {
     headers: {authorization: newLoginInApi.token}
   })
