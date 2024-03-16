@@ -1,6 +1,3 @@
 export default class Queue {
-    constructor(readonly sequence: Array<String>) {}
-    create() {
-        return new Queue(this.sequence)
-    }
+    constructor(readonly sequence: Array<String>, readonly organizationId: String, readonly id?: String) {}
 }
