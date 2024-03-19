@@ -123,5 +123,5 @@ test("Deve testar o delete do repositório da entidade Queue", async() => {
     }
     const queue = new QueueMongooseRepository
     const idQueue = (await queue.save(validInput)).id
-    expect(async() => queue.delete(idQueue))
+    expect(async() => queue.delete(idQueue)).resolves
 }, 15000)

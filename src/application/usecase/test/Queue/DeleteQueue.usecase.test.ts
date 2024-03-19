@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import SaveQueue from "../../Queue/Create.usecase";
 import { config } from 'dotenv';
 import QueueMongooseRepository from "../../../../infra/repository/mongoDB/repositories/QueueMongooseRepository";
+import DeleteQueue from "../../Queue/Delete.usecase";
 config();
 
 async function login(organizationId?) {
@@ -51,14 +52,15 @@ async function login(organizationId?) {
     return ObjectLogin
 }
 
-test("Deve testar o caso de uso, saveQueue", async() => {
+test("Deve testar o caso de uso, delete", async() => {
     await mongoose.connect(process.env.connectionString as string);
     const newLogin = await login()
     const validInput = {
         sequence: ['shhh', 'shhh', 'shhhh'],
         organizationId: newLogin.manager.organizationId
     }
-    const queue = new SaveQueue(new QueueMongooseRepository)
+    const queue = new SaveQueue(new QueueMongooseRepository())
     const saveQueue = await queue.execute(validInput)
-    expect(saveQueue.id).toBeDefined()
+    const delQueue = new DeleteQueue(new QueueMongooseRepository())
+    expect(async() => await delQueue.execute({id: saveQueue.id})).resolves
 }, 15000)
