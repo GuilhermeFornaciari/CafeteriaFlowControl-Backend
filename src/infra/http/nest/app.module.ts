@@ -8,7 +8,7 @@ import { loginRequired } from './middleware/middlewareDeLogin';
 import LogoutController from './controllers/Logout.controller';
 import { databaseProviders as connectDatabase } from './mongodbProvider';
 import QueueController from './controllers/Queue.controller';
-import QueueMongooseRepository from 'src/infra/repository/mongoDB/repositories/QueueMongooseRepository';
+import QueueMongooseRepository from '../../../infra/repository/mongoDB/repositories/QueueMongooseRepository';
 @Module({
     controllers: [
         ManagerController,

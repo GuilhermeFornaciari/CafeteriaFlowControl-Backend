@@ -54,8 +54,7 @@ async function loginInApi() {
       name: newLogin.manager.name,
       password: newLogin.manager.password,
   }
-  const getToken = await axios.post("https://cafeteria-flow-control-backend.vercel.app/manager", inputLogin)
-  console.log(getToken.data)
+  const getToken = await axios.post("http://localhost:4000/manager", inputLogin)
   const objectLogin = {
     name: inputLogin.name,
     password: inputLogin.password,
@@ -67,7 +66,7 @@ async function loginInApi() {
 test("Deve testar o GetOne", async () => {
     const newLogin = await login()
     const newLoginInApi = await loginInApi()
-    const getOne = await axios.get("https://cafeteria-flow-control-backend.vercel.app/manager" + '/' + newLogin.manager.name,
+    const getOne = await axios.get("http://localhost:4000/manager" + '/' + newLogin.manager.name,
     {
       headers: {authorization: newLoginInApi.token}
     })
@@ -80,6 +79,6 @@ test("Deve testar o Login", async() => {
         name: newLogin.manager.name,
         password: newLogin.manager.password,
     }
-    const getToken = await axios.post("https://cafeteria-flow-control-backend.vercel.app/manager", inputLogin)
+    const getToken = await axios.post("http://localhost:4000/manager", inputLogin)
     expect(getToken.data.token).toBeDefined()
 }, 15000)

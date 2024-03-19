@@ -8,7 +8,6 @@ import {
 import ManagerMongooseRepository from '../../../repository/mongoDB/repositories/ManagerMongooseRepository';
 import GetOneUseCaseManager from '../../../../application/usecase/Manager/GetOne.usecase';
 import LoginUsecaseManager from '../../../../application/usecase/Manager/login.usecase';
-import LogoutUsecaseManager from '../../../../application/usecase/Manager/logout.usecase';
 import LogoutMongooseRepository from '../../../repository/mongoDB/repositories/LogoutMongooseRepository';
 import { input as loginInput } from '../../../../application/usecase/Manager/login.usecase';
 @Controller('manager')
