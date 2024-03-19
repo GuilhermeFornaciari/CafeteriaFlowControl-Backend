@@ -32,7 +32,7 @@ export default class QueueMongooseRepository implements QueueRepositoryInterface
         return this.model.findById(id)
     }
 
-    async updateAll(sequence: String[], id: string): Promise<void> {
+    async updateAll(sequence: String[], id: String): Promise<void> {
         return this.model.findByIdAndUpdate(id, {
             sequence: sequence
         })
