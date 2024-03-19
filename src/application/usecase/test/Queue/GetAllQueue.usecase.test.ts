@@ -1,6 +1,6 @@
 import axios from "axios";
 import mongoose from "mongoose";
-import SaveQueue from "../../Queue/Create.usecase";
+import SaveQueue from "../../Queue/Save.usecase";
 import { config } from 'dotenv';
 import QueueMongooseRepository from "../../../../infra/repository/mongoDB/repositories/QueueMongooseRepository";
 import GetAllQueue from "../../Queue/GetAll.usecase";
