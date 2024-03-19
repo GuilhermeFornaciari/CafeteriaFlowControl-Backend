@@ -7,17 +7,21 @@ import StudentsMongooseRepository from '../../repository/mongoDB/repositories/St
 import { loginRequired } from './middleware/middlewareDeLogin';
 import LogoutController from './controllers/Logout.controller';
 import { databaseProviders as connectDatabase } from './mongodbProvider';
+import QueueController from './controllers/Queue.controller';
+import QueueMongooseRepository from 'src/infra/repository/mongoDB/repositories/QueueMongooseRepository';
 @Module({
     controllers: [
         ManagerController,
         StudentController,
         LogoutController,
+        QueueController,
     ],
     providers: [
         connectDatabase,
         ManagerMongooseRepository,
         StudentsMongooseRepository,
         LogoutMongooseRepository,
+        QueueMongooseRepository,
     ],
     exports: [connectDatabase]
 })
