@@ -9,6 +9,7 @@ export default class SaveQueue {
     const repoQueue = await this.repo.save(queue)        
     return {
         sequence: repoQueue.sequence,
+        organizationId: repoQueue.organizationId,
         id: repoQueue.id
     }
     }
@@ -21,5 +22,6 @@ export type Input = {
 
 export type Output = {
     sequence: Array<String>,
+    organizationId: String,
     id: String,
 }

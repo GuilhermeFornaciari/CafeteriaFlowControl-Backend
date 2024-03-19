@@ -3,7 +3,9 @@ import QueueRepositoryInterface from "../../repository/QueueRepositoryInterface"
 export default class GetOneQueue {
     constructor(readonly repo: QueueRepositoryInterface) {}
     async execute(props: Input): Promise<Output>{
-        const queue = await this.repo.GetOne(props.id)
+        const queue = await this.repo.getOne(props.id)
+        if(!queue)
+            throw new Error("nenhuma fila encontrada")
         return {
             sequence: queue.sequence,
             id: queue.id,
