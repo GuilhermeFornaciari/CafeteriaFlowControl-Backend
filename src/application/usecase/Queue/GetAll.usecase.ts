@@ -3,13 +3,14 @@ import QueueRepositoryInterface from "../../repository/QueueRepositoryInterface"
 export default class GetAllQueue {
     constructor(readonly repo: QueueRepositoryInterface) {}
     async execute(props: Input): Promise<Output[]> {
-        const GetAllQueue = (await this.repo.GetAll(props.OrganizationId)).map((Data) => {
+        const getAllQueue = (await this.repo.getAll(props.OrganizationId)).map((Data) => {
             return {
                 sequence: Data.sequence,
                 id: Data.id,
                 organizationId: Data.organizationId
             }})
-        return GetAllQueue
+            console.log(getAllQueue)
+        return getAllQueue
     }
 }
 

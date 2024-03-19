@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import SaveQueue from "../../Queue/Create.usecase";
 import { config } from 'dotenv';
 import QueueMongooseRepository from "../../../../infra/repository/mongoDB/repositories/QueueMongooseRepository";
+import GetAllQueue from "../../Queue/GetAll.usecase";
 config();
 
 async function login(organizationId?) {
@@ -59,6 +60,16 @@ test("Deve testar o caso de uso, saveQueue", async() => {
         organizationId: newLogin.manager.organizationId
     }
     const queue = new SaveQueue(new QueueMongooseRepository())
-    const saveQueue = await queue.execute(validInput)
-    expect(saveQueue.id).toBeDefined()
+    const idQueue = await queue.execute(validInput)
+    const validInput1 = {
+        sequence: ['shhh', 'shhh', 'shhhh'],
+        organizationId: newLogin.manager.organizationId
+    }
+    const idQueue1 = await queue.execute(validInput1)
+    const getAllQueues = new GetAllQueue(new QueueMongooseRepository())
+    const queues = await getAllQueues.execute({OrganizationId: newLogin.manager.organizationId})
+    const oneQueue = queues.find((Data) => Data.id === idQueue.id)
+    expect(oneQueue.id).toBe(idQueue.id)
+    const oneQueue1 = queues.find((Data) => Data.id === idQueue1.id)
+    expect(oneQueue1.id).toBe(idQueue1.id)
 }, 15000)
