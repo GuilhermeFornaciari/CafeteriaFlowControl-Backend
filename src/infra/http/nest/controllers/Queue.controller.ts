@@ -28,7 +28,7 @@ export default class QueueController {
     @Get(':organizationId')
     async getAll(@Param('organizationId') organizationId: String) {
         const usecase = new GetAllQueue(this.repoQueue)
-        return await usecase.execute({OrganizationId: organizationId})
+        await usecase.execute({OrganizationId: organizationId})
     }
 
     @Get('/getOne/:id')

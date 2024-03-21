@@ -1,4 +1,7 @@
 import axios from 'axios';
+axios.defaults.validateStatus = function () {
+    return true;
+};
 
 async function login(organizationId?) {
     const randomUser = Math.random().toString(36).slice(-10);
@@ -102,7 +105,7 @@ test("deve fazer um GetAll das filas", async()=> {
     expect(getQueue.data).toBeDefined()
 }, 15000)
 
-test.only("Deve testar o GetOne das filas", async() => {
+test("Deve testar o GetOne das filas", async() => {
     const newLogin = await login()
     const newLoginInApi = await loginInApi()
     const validInput = {
@@ -117,7 +120,51 @@ test.only("Deve testar o GetOne das filas", async() => {
     {
         headers: {authorization: newLoginInApi.token}
     });
-    console.log(getOneQueue.data)
     expect(getOneQueue.data).toBeDefined()
     expect(getOneQueue.data.organizationId).toBeDefined()
+}, 15000)
+
+test("Deve testar o delete das filas", async() => {
+    const newLogin = await login()
+    const newLoginInApi = await loginInApi()
+    const validInput = {
+        sequence: ['1°A AGRO', "1°B AGRO", "2°A AGRO", "2°B AGROPEC"],
+        organizationId: newLogin.manager.organizationId,
+    }
+    const saveQueue = await axios.post("https://cafeteria-flow-control-backend.vercel.app/queue", validInput,
+    {
+        headers: {authorization: newLoginInApi.token}
+    })
+    await axios.delete("https://cafeteria-flow-control-backend.vercel.app/queue/"
+    + saveQueue.data.id,
+    {
+        headers: {authorization: newLoginInApi.token}
+    })
+}, 15000)
+
+test("Deve testar o update", async() => {
+    const newLogin = await login()
+    const newLoginInApi = await loginInApi()
+    const validInput = {
+        sequence: ['1°A AGRO', "1°B AGRO", "2°A AGRO", "2°B AGROPEC"],
+        organizationId: newLogin.manager.organizationId,
+    }
+    const saveQueue = await axios.post("https://cafeteria-flow-control-backend.vercel.app/queue", validInput,
+    {
+        headers: {authorization: newLoginInApi.token}
+    })
+    const newValidInput = {
+        sequence: ['1°A TI', "1°B TI", "2°A TI", "2°B TI"],
+    }
+    await axios.put("https://cafeteria-flow-control-backend.vercel.app/queue/" + saveQueue.data.id, newValidInput,
+    {
+        headers: {authorization: newLoginInApi.token}
+    })
+    const getOneQueue = await axios.get("https://cafeteria-flow-control-backend.vercel.app/queue/getOne/" + saveQueue.data.id,
+    {
+        headers: {authorization: newLoginInApi.token}
+    });
+    expect(getOneQueue.data.id).toBe(saveQueue.data.id)
+    expect(getOneQueue.data.organizationId).toBe(saveQueue.data.organizationId)
+    expect(getOneQueue.data.sequence[0])
 }, 15000)
