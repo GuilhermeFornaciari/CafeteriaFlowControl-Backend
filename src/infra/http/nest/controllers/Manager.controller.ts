@@ -4,6 +4,7 @@ import {
     Get,
     Param,
     Post,
+    Response,
   } from '@nestjs/common';
 import ManagerMongooseRepository from '../../../repository/mongoDB/repositories/ManagerMongooseRepository';
 import GetOneUseCaseManager from '../../../../application/usecase/Manager/GetOne.usecase';
@@ -22,7 +23,16 @@ export default class ManagerController {
 
     @Post()
     async login(@Body() loginData: loginInput) {
+        try{
         const usecase = new LoginUsecaseManager(this.repoManager, this.repoLogout)
         return await usecase.execute(loginData)
+    } catch(e) {
+        let errorNumber: number
+        switch(e.message) {
+        case "Administrador não encontrado": {
+            errorNumber: 404
+            Response()
+        }
     }
+    }}
 }
