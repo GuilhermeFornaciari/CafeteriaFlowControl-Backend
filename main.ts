@@ -9,7 +9,7 @@ async function main(port: number) {
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
     allowedHeaders:
       'Content-Type,Accept,Authorization,Access-Control-Allow-Origin',
-  });
+  });
   await app.listen(port);
 }
 const port = 4000;
