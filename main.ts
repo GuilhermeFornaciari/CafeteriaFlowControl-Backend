@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './src/infra/http/nest/app.module';
 
 async function main(port: number) {
-  const app = await NestFactory.create(AppModule, {cors: true})
+  const app = await NestFactory.create(AppModule)
   app.enableCors({
     origin: true,
     credentials: true, // se tu for ter credenciais no cabecalho
