@@ -5,10 +5,9 @@ async function main(port: number) {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
+    origin: 'https://ur-flow.vercel.app/',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: ['content-type'],
   });
   await app.listen(port);
 }
