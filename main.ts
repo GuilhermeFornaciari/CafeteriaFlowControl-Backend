@@ -7,7 +7,7 @@ async function main(port: number) {
   app.enableCors({
     origin: 'https://ur-flow.vercel.app/',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: ['content-type'],
+    allowedHeaders: ['content-type', 'Access-Control-Allow-Origin'],
   });
   await app.listen(port);
 }
