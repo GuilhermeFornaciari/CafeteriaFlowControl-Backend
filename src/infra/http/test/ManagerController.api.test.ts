@@ -1,4 +1,6 @@
 import axios from 'axios';
+const linkAPI = 'http://localhost:4000'
+const linkSOSA = 'https://sosa-repo-dev.vercel.app'
 
 async function login(organizationId?) {
     const randomUser = Math.random().toString(36).slice(-10);
@@ -22,14 +24,14 @@ async function login(organizationId?) {
       password: dataPostOrganization.manager.password,
       type: dataPostOrganization.manager.type
     }
-    const organizationPost = await axios.post('https://sosa-repo-main.vercel.app/Organization',
+    const organizationPost = await axios.post(linkSOSA + '/Organization',
     dataPostOrganization);
     const AxiosOutput = await axios.post(
-      'https://sosa-repo-main.vercel.app/Admin',
+      linkSOSA + '/Admin',
       inputLogin
     );
     const managerPost = await axios.post(
-      'https://sosa-repo-main.vercel.app/Admin/' + organizationId, inputPostManager,
+      linkSOSA + '/Admin/' + organizationId, inputPostManager,
       {
         headers: {authorization: AxiosOutput.data.token}
       },
@@ -53,7 +55,8 @@ async function loginInApi() {
       name: newLogin.manager.name,
       password: newLogin.manager.password,
   }
-  const getToken = await axios.post("https://cafeteria-flow-control-backend.vercel.app/manager", inputLogin)
+  console.log(newLogin)
+  const getToken = await axios.post(linkAPI + "/manager", inputLogin)
   const objectLogin = {
     name: inputLogin.name,
     password: inputLogin.password,
@@ -62,10 +65,11 @@ async function loginInApi() {
   return objectLogin
 }
 
-test("Deve testar o GetOne", async () => {
+test.only("Deve testar o GetOne", async () => {
     const newLogin = await login()
     const newLoginInApi = await loginInApi()
-    const getOne = await axios.get("https://cafeteria-flow-control-backend.vercel.app/manager" + '/' + newLogin.manager.name,
+    console.log(newLoginInApi)
+    const getOne = await axios.get(linkAPI + "/manager" + '/' + newLogin.manager.name,
     {
       headers: {authorization: newLoginInApi.token}
     })
@@ -78,6 +82,6 @@ test("Deve testar o Login", async() => {
         name: newLogin.manager.name,
         password: newLogin.manager.password,
     }
-    const getToken = await axios.post("https://cafeteria-flow-control-backend.vercel.app/manager", inputLogin)
+    const getToken = await axios.post(linkAPI + "/manager", inputLogin)
     expect(getToken.data.token).toBeDefined()
 }, 15000)
