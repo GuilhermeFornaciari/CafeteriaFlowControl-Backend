@@ -3,10 +3,12 @@ import { AppModule } from './src/infra/http/nest/app.module';
 
 async function main(port: number) {
   const app = await NestFactory.create(AppModule);
+
   app.enableCors({
-    allowedHeaders: ['content-type'],
-    origin: 'http://localhost:4200',
-    credentials: true,
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
   });
   await app.listen(port);
 }
